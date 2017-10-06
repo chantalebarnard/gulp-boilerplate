@@ -15,7 +15,7 @@ gulp.task('styles', () => {
 
 // task to compile our javascript
 gulp.task('scripts', () => {
-	return gulp.src('./dev//main.js')
+	return gulp.src('./dev/scripts/main.js')
 		.pipe(babel({
 			presets: ['es2015']
 		}))
@@ -31,6 +31,7 @@ gulp.task('browser-sync', () => {
 // a tas to watch all of my othr tasks 
 gulp.task('default', ['styles', 'browser-sync', 'scripts'], () => {
 	gulp.watch('./dev/styles/**/*.scss', ['styles'])
-	gulp.watch('./dev/scripts/main.js', ['scripts'])
+	gulp.watch('./dev/scripts/main.js'), ['scripts']
 	gulp.watch('*.html', reload);
 });
+
