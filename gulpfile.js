@@ -2,6 +2,8 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
+const browserSync = require('browser-sync').create();
+const reload = browserSync.reload;
 
 // a task to compile our sass
 gulp.task('styles', () => {
@@ -15,14 +17,20 @@ gulp.task('styles', () => {
 gulp.task('scripts', () => {
 	return gulp.src('./dev//main.js')
 		.pipe(babel({
-			presets: ['es2015', 'es2016']
+			presets: ['es2015']
 		}))
 		.pipe(gulp.dest('./public/scripts'))
 });
 
+gulp.task('browser-sync', () => {
+	browserSync.init({
+		server: '.'
+	});
+});
+
 // a tas to watch all of my othr tasks 
-gulp.task('watch', () => {
+gulp.task('default', ['styles', 'browser-sync', 'scripts'], () => {
 	gulp.watch('./dev/styles/**/*.scss', ['styles'])
 	gulp.watch('./dev/scripts/main.js', ['scripts'])
-})
-gulp.task('default', ['styles', 'scripts', 'watch']);
+	gulp.watch('*.html', reload);
+});
